@@ -38,11 +38,12 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="w-40" />
           <ul>
             <li className="flex space-x-5">
-              {links.map((link) => {
+              {links.map((link, index) => {
                 return (
                   <a
                     href={link.href}
                     className="hover:text-red-500 transition-colors duration-300"
+                    key={index}
                   >
                     {link.name}
                   </a>
