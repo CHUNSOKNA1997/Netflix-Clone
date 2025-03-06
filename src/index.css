@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 .background-banner {
-  background-image: url(../public/hero_banner.jpg);
+  background-image: linear-gradient(to right, black, transparent 90%),
+    url(../public/hero_banner.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
