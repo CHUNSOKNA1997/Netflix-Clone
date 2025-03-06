@@ -14,11 +14,11 @@ const Home = () => {
           enemy.
         </p>
         <div className="flex gap-5">
-          <button className="bg-white flex items-center justify-center px-7 py-3 rounded-md text-black gap-2 hover:cursor-pointer hover:bg-gray-700">
+          <button className="bg-white flex items-center justify-center px-7 py-3 rounded-md text-black gap-2 hover:cursor-pointer hover:bg-gray-300 transition-colors duration-300">
             <Play size={24} />
             <span>Play</span>
           </button>
-          <button className="bg-white-opacity flex items-center justify-center px-7 py-3 rounded-md text-white gap-2">
+          <button className="bg-white-opacity flex items-center justify-center px-7 py-3 rounded-md text-white gap-2 hover:cursor-pointer hover:bg-gray-500 transition-colors duration-300">
             <Info size={24} />
             <span>More Info</span>
           </button>
