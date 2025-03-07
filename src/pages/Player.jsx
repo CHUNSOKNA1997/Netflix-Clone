@@ -18,8 +18,6 @@ const Player = () => {
   const [movies, setMovies] = useState({
     name: "",
     key: "",
-    publish_at: "",
-    typeof: "",
   });
 
   const navigate = useNavigate();
@@ -55,7 +53,7 @@ const Player = () => {
       <CircleArrowLeft
         size={42}
         className="text-white absolute top-24 left-6 hover:cursor-pointer"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
       />
 
       {movies.key ? (
