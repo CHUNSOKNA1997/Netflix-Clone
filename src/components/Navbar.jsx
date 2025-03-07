@@ -33,7 +33,7 @@ const links = [
 const Navbar = () => {
   return (
     <>
-      <nav className="flex justify-between items-center pt-7 mx-15">
+      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center pt-7 mx-15">
         <div className="flex items-center space-x-17">
           <img src={logo} alt="logo" className="w-40" />
           <ul>
