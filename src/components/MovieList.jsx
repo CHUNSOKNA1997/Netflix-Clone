@@ -54,16 +54,16 @@ const MovieList = ({ Title, Category }) => {
 
   return (
     <div className="space-y-2">
-      <p className="text-4xl font-bold ml-15">{Title}</p>
+      <p className="text-4xl font-bold ml-14">{Title}</p>
       <div
-        className="flex gap-4 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
+        className="flex gap-8 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
         ref={scrollRef}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {movies.map((movie) => (
           <div
             key={movie.id}
-            className="flex flex-col gap-2 min-w-[200px] transform transition-transform duration-300 hover:scale-110 p-4"
+            className="flex flex-col gap-2 min-w-[200px] transform transition-transform duration-300 hover:scale-110 pt-4"
           >
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

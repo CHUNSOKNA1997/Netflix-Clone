@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import MovieList from "../components/MovieList";
 import hero from "../assets/hero_title.png";
 import { Info, Play } from "lucide-react";
 
 const Home = () => {
   return (
-    <main className="relative background-banner bg-opacity-50 h-screen w-full">
+    <main className="background-banner bg-opacity-50 h-screen w-full">
       <Navbar />
-      <div className="absolute bottom-77 left-16 text-white space-y-7 w-1/3">
+
+      <div className="pt-32 px-15 text-white space-y-7 w-1/3">
         <img src={hero} alt="hero_title" className="w-full max-w-lg" />
         <p>
           Discovering his ties to a secret ancient order, a young man living in
@@ -24,6 +26,13 @@ const Home = () => {
             <span>More Info</span>
           </button>
         </div>
+      </div>
+
+      <div className="mt-16 space-y-7">
+        <MovieList Title="Popular Movies" Category="popular" />
+        <MovieList Title="Now Playing" Category="now_playing" />
+        <MovieList Title="Top Rated" Category="top_rated" />
+        <MovieList Title="Up Coming" Category="upcoming" />
       </div>
     </main>
   );
