@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -61,7 +62,8 @@ const MovieList = ({ Title, Category }) => {
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {movies.map((movie) => (
-          <div
+          <Link
+            to={`/player/${movie.id}`}
             key={movie.id}
             className="flex flex-col gap-2 min-w-[200px] transform transition-transform duration-300 hover:scale-110 pt-4"
           >
@@ -71,7 +73,7 @@ const MovieList = ({ Title, Category }) => {
               className="rounded-md w-full"
             />
             <p className="text-white truncate">{movie.title}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
