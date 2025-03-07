@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import hero from "../assets/hero_title.png";
 import { Info, Play } from "lucide-react";
-import MovieGrid from "../components/MovieGrid";
 
 const Home = () => {
   return (
@@ -25,9 +24,6 @@ const Home = () => {
             <span>More Info</span>
           </button>
         </div>
-      </div>
-      <div className="absolute bottom-0 mb-[-165px] w-full space-y-5 ">
-        <MovieGrid />
       </div>
     </main>
   );

@@ -10,13 +10,16 @@ const API_OPTIONS = {
   },
 };
 
-const MovieGrid = () => {
+const MovieList = ({ Title, Category }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [movies, setMovies] = useState([]);
+  const scrollRef = useRef();
 
   const fetchMovies = async () => {
     try {
-      const endpoint = `${API_BASE_URL}/movie/${category}?language=en-US&page=1`;
+      const endpoint = `${API_BASE_URL}/movie/${
+        Category ? Category : "popular"
+      }?language=en-US&page=1`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         throw new Error(`Error fetching data: ${response.status}`);
@@ -30,29 +33,38 @@ const MovieGrid = () => {
 
   useEffect(() => {
     fetchMovies();
-  }, []);
-
+  }, [Category]);
   if (errorMessage) {
     return <div className="text-red-500 px-14">{errorMessage}</div>;
   }
+
   const handleWheel = (e) => {
-    e.preventDefault();
-    scrollRef.current.scrollLeft += e.deltaY;
+    if (scrollRef.current) {
+      e.preventDefault();
+      scrollRef.current.scrollLeft += e.deltaY;
+    }
   };
-  const scrollRef = useRef();
+
   useEffect(() => {
-    scrollRef.current.addEventListener("wheel", handleWheel);
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
+    scrollElement.addEventListener("wheel", handleWheel);
+    return () => scrollElement.removeEventListener("wheel", handleWheel);
   }, []);
+
   return (
-    <div>
+    <div className="space-y-2">
+      <p className="text-4xl font-bold ml-15">{Title}</p>
       <div
-        className="flex gap-5 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
+        className="flex gap-4 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
         ref={scrollRef}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <p className="text-4xl font-bold uppercase px-14">popular movies</p>
         {movies.map((movie) => (
-          <div key={movie.id} className="flex flex-col gap-2 min-w-[200px]">
+          <div
+            key={movie.id}
+            className="flex flex-col gap-2 min-w-[200px] transform transition-transform duration-300 hover:scale-110 p-4"
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
@@ -66,4 +78,4 @@ const MovieGrid = () => {
   );
 };
 
-export default MovieGrid;
+export default MovieList;
