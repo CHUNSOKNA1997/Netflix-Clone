@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import hero from "../assets/hero_title.png";
 import { Info, Play } from "lucide-react";
-import PopularMovieGrid from "../components/PopularMovieGrid";
+import MovieGrid from "../components/MovieGrid";
 
 const Home = () => {
   return (
@@ -27,8 +27,7 @@ const Home = () => {
         </div>
       </div>
       <div className="absolute bottom-0 mb-[-165px] w-full space-y-5 ">
-        <p className="text-4xl font-bold uppercase px-14">popular movies</p>
-        <PopularMovieGrid />
+        <MovieGrid />
       </div>
     </main>
   );

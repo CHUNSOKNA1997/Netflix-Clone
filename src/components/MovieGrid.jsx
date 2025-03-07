@@ -10,13 +10,13 @@ const API_OPTIONS = {
   },
 };
 
-const PopularMovieGrid = () => {
+const MovieGrid = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [movies, setMovies] = useState([]);
 
   const fetchMovies = async () => {
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endpoint = `${API_BASE_URL}/movie/${category}?language=en-US&page=1`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         throw new Error(`Error fetching data: ${response.status}`);
@@ -44,23 +44,26 @@ const PopularMovieGrid = () => {
     scrollRef.current.addEventListener("wheel", handleWheel);
   }, []);
   return (
-    <div
-      className="flex gap-5 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
-      ref={scrollRef}
-      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-    >
-      {movies.map((movie) => (
-        <div key={movie.id} className="flex flex-col gap-2 min-w-[200px]">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            className="rounded-md w-full"
-          />
-          <p className="text-white truncate">{movie.title}</p>
-        </div>
-      ))}
+    <div>
+      <div
+        className="flex gap-5 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
+        ref={scrollRef}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        <p className="text-4xl font-bold uppercase px-14">popular movies</p>
+        {movies.map((movie) => (
+          <div key={movie.id} className="flex flex-col gap-2 min-w-[200px]">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="rounded-md w-full"
+            />
+            <p className="text-white truncate">{movie.title}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default PopularMovieGrid;
+export default MovieGrid;
