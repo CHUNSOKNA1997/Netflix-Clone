@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import logo from "../assets/logo.png";
 import { Search, ChevronDown, Bell } from "lucide-react";
 import profile from "../assets/profile_img.png";
@@ -31,10 +31,24 @@ const links = [
 ];
 
 const Navbar = () => {
+  const navRef = useRef();
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        navRef.current.classList.add("bg-black");
+      } else {
+        navRef.current.classList.remove("bg-black");
+      }
+    });
+  }, []);
+
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center pt-7 mx-15 z-50">
-        <div className="flex items-center space-x-17">
+      <nav
+        ref={navRef}
+        className="fixed top-0 flex justify-between items-center z-50 w-full h-[100px] transition-colors duration-300"
+      >
+        <div className="flex items-center space-x-17 mx-14">
           <img src={logo} alt="logo" className="w-40" />
           <ul>
             <li className="flex space-x-5">
@@ -53,7 +67,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 mr-14">
           <Search size={24} />
           <span>Children</span>
           <Bell size={24} />
