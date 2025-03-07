@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -18,20 +18,12 @@ const PopularMovieGrid = () => {
     try {
       const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
-
       if (!response.ok) {
-        throw new Error(
-          `Error fetching data: ${response.status} - ${
-            errorData?.status_message || "Unknown error"
-          }`
-        );
+        throw new Error(`Error fetching data: ${response.status}`);
       }
-
       const data = await response.json();
-      console.log(data);
       setMovies(data.results);
     } catch (error) {
-      console.error("Fetch error:", error.message);
       setErrorMessage(`Error fetching data: ${error.message}`);
     }
   };
@@ -40,23 +32,34 @@ const PopularMovieGrid = () => {
     fetchMovies();
   }, []);
 
+  if (errorMessage) {
+    return <div className="text-red-500 px-14">{errorMessage}</div>;
+  }
+  const handleWheel = (e) => {
+    e.preventDefault();
+    scrollRef.current.scrollLeft += e.deltaY;
+  };
+  const scrollRef = useRef();
+  useEffect(() => {
+    scrollRef.current.addEventListener("wheel", handleWheel);
+  }, []);
   return (
-    <>
-      <div className="h-screen w-full ">
-        <div className="grid grid-cols-6 gap-4 p-15">
-          {movies.map((movie) => (
-            <div key={movie.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-full rounded-md"
-              />
-              <p>{movie.title}</p>
-            </div>
-          ))}
+    <div
+      className="flex gap-5 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
+      ref={scrollRef}
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      {movies.map((movie) => (
+        <div key={movie.id} className="flex flex-col gap-2 min-w-[200px]">
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            className="rounded-md w-full"
+          />
+          <p className="text-white truncate">{movie.title}</p>
         </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 
