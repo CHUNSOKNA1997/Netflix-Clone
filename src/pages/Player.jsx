@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CircleArrowLeft } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom"; // To get movie ID from URL
+import { useNavigate, useParams } from "react-router-dom";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -22,7 +22,7 @@ const Player = () => {
     typeof: "",
   });
 
-  const navigateBack = useNavigate();
+  const navigate = useNavigate();
 
   const fetchMovies = async () => {
     try {
@@ -55,8 +55,9 @@ const Player = () => {
       <CircleArrowLeft
         size={42}
         className="text-white absolute top-24 left-6 hover:cursor-pointer"
-        onClick={navigateBack(-2)}
+        onClick={() => navigate(-1)}
       />
+
       {movies.key ? (
         <iframe
           width="100%"
