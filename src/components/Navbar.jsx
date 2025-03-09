@@ -36,7 +36,6 @@ const Navbar = () => {
       ref={navRef}
       className="fixed top-0 flex justify-between items-center z-50 w-full h-[100px] transition-colors duration-300 px-14"
     >
-      {/* Left Section */}
       <div className="flex items-center space-x-10">
         <img src={logo} alt="logo" className="w-40" />
         <ul className="flex space-x-5">
@@ -53,7 +52,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Right Section */}
       <div className="flex items-center gap-5">
         <Search
           size={24}
@@ -65,7 +63,6 @@ const Navbar = () => {
           className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300"
         />
 
-        {/* Profile Dropdown */}
         <div className="relative group">
           <div className="flex items-center gap-2 cursor-pointer">
             <img
