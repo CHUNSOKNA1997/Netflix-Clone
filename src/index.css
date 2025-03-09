@@ -16,3 +16,20 @@
 .bg-white-opacity-hover:hover {
   background-color: rgba(128, 128, 128, 0.7);
 }
+
+.background-banner-login {
+  background-image: linear-gradient(to right, black, transparent 50%),
+    linear-gradient(to top, black, transparent 50%),
+    url(../public/login_banner.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.background-login-form {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.background-input-field {
+  background-color: rgba(0, 0, 0, 0.7);
+}
