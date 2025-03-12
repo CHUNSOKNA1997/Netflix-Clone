@@ -33,3 +33,7 @@
 .background-input-field {
   background-color: rgba(0, 0, 0, 0.7);
 }
+
+.button-footer {
+  background-color: rgb(193, 17, 25);
+}

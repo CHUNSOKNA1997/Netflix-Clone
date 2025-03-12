@@ -60,6 +60,7 @@ const Login = () => {
           <div className="flex items-center justify-between mt-3 mb-4">
             <div className="flex items-center">
               <input type="checkbox" id="remember" className="mr-1" />
+
               <label htmlFor="remember" className="text-sm text-gray-300">
                 Remember me
               </label>
@@ -75,9 +76,8 @@ const Login = () => {
                   setSignStateSet("Sign Up");
                 }}
               >
-                Sign Up now
+                Sign Up now.
               </a>
-              .
             </div>
           ) : (
             <div className="mt-4 text-base text-gray-400">
@@ -88,9 +88,8 @@ const Login = () => {
                   setSignStateSet("Sign In");
                 }}
               >
-                Sign In now
+                Sign In now.
               </a>
-              .
             </div>
           )}
 
@@ -98,9 +97,8 @@ const Login = () => {
             This page is protected by Google reCAPTCHA to ensure you're not a
             bot.
             <a href="#" className="ml-1 text-blue-500 hover:underline">
-              Learn more
+              Learn more.
             </a>
-            .
           </div>
         </div>
       </div>

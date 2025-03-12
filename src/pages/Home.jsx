@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import MovieList from "../components/MovieList";
+import Footer from "../components/Footer";
 import hero from "../assets/hero_title.png";
 import { Info, Play } from "lucide-react";
 
@@ -40,6 +41,8 @@ const Home = () => {
         <MovieList Title="Top Rated" Category="top_rated" />
         <MovieList Title="Up Coming" Category="upcoming" />
       </div>
+
+      <Footer />
     </main>
   );
 };
