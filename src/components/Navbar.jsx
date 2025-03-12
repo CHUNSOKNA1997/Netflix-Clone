@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { Search, ChevronDown, Bell } from "lucide-react";
-import profile from "../assets/profile_img.png";
+import { Search, Bell, Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const links = [
   { href: "#Home", name: "Home" },
@@ -14,6 +14,8 @@ const links = [
 
 const Navbar = () => {
   const navRef = useRef();
+  const homeNavigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,25 +27,29 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 flex justify-between items-center z-50 w-full h-[100px] transition-colors duration-300 px-14"
+      className="fixed top-0 flex justify-between items-center z-50 w-full transition-colors duration-300 px-4 md:px-8 lg:px-14 h-[70px] md:h-[80px] lg:h-[100px]"
     >
-      <div className="flex items-center space-x-10">
-        <img src={logo} alt="logo" className="w-40" />
-        <ul className="flex space-x-5">
+      <div className="flex items-center">
+        <img src={logo} alt="logo" className="w-24 md:w-32 lg:w-40" />
+
+        <ul className="hidden md:flex space-x-2 lg:space-x-5 ml-4 lg:ml-10">
           {links.map((link, index) => (
             <li key={index}>
               <a
                 href={link.href}
-                className="text-white hover:text-red-500 transition-colors duration-300"
+                className="text-white text-sm lg:text-base hover:text-red-500 transition-colors duration-300"
               >
                 {link.name}
               </a>
@@ -52,37 +58,60 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2 md:gap-4 lg:gap-5">
         <Search
-          size={24}
-          className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300"
+          size={20}
+          className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300 hidden sm:block"
         />
-        <span className="text-white">Children</span>
         <Bell
-          size={24}
-          className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300"
+          size={20}
+          className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300 hidden sm:block"
         />
+        <div className="relative">
+          <p
+            className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300 text-sm md:text-base"
+            onClick={() => {
+              homeNavigate("/login");
+            }}
+          >
+            Sign In
+          </p>
+        </div>
 
-        <div className="relative group">
-          <div className="flex items-center gap-2 cursor-pointer">
-            <img
-              src={profile}
-              alt="profile_img"
-              className="w-10 h-10 rounded-md"
-            />
-            <ChevronDown
-              size={24}
-              className="text-white group-hover:text-red-500 transition-colors duration-300"
-            />
-          </div>
+        <button className="text-white md:hidden" onClick={toggleMobileMenu}>
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
-          <div className="absolute top-10 right-0 w-40 bg-[#191919] p-3 py-4 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-in-out">
-            <p className="underline text-white text-center cursor-pointer text-[13px] hover:text-red-500">
-              Sign Out of Netflix
-            </p>
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 top-[70px] background-input-field z-40 md:hidden">
+          <div className="flex flex-col p-5">
+            <ul className="flex flex-col space-y-4 mb-8">
+              {links.map((link, index) => (
+                <li key={index}>
+                  <a
+                    href={link.href}
+                    className="text-white text-lg block py-2 hover:text-red-500 transition-colors duration-300"
+                    onClick={toggleMobileMenu}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center space-x-6 mt-4">
+              <Search
+                size={24}
+                className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300"
+              />
+              <Bell
+                size={24}
+                className="text-white hover:text-red-500 cursor-pointer transition-colors duration-300"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
