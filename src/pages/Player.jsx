@@ -15,14 +15,15 @@ const API_OPTIONS = {
 const Player = () => {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState({
     name: "",
     key: "",
   });
-
   const navigate = useNavigate();
 
   const fetchMovies = async () => {
+    setIsLoading(true);
     try {
       const endpoint = `${API_BASE_URL}/movie/${id}/videos?language=en-US`;
       const response = await fetch(endpoint, API_OPTIONS);
@@ -37,6 +38,8 @@ const Player = () => {
       }
     } catch (error) {
       setErrorMessage(`Error fetching data: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,32 +47,66 @@ const Player = () => {
     fetchMovies();
   }, [id]);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full px-4">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-full max-w-5xl aspect-video bg-gray-700 rounded-lg"></div>
+          <div className="h-6 bg-gray-700 rounded w-48 mt-4"></div>
+        </div>
+      </div>
+    );
+  }
+
   if (errorMessage) {
-    return <div className="text-red-500 px-14">{errorMessage}</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen px-4 sm:px-6">
+        <p className="text-red-500 text-center text-lg">{errorMessage}</p>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Back to Home
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center">
-      <CircleArrowLeft
-        size={42}
-        className="text-white absolute top-24 left-6 hover:cursor-pointer"
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-black px-4 py-16 sm:px-6 relative">
+      <button
+        className="text-white absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-white rounded-full transition-transform hover:scale-110"
         onClick={() => navigate("/")}
-      />
+        aria-label="Back to home"
+      >
+        <CircleArrowLeft
+          size={36}
+          className="sm:w-10 sm:h-10 md:w-12 md:h-12"
+        />
+      </button>
 
-      {movies.key ? (
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${movies.key}`}
-          title="trailer"
-          frameBorder="0"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <p className="text-white">No video available</p>
-      )}
-      <div className="absolute bottom-24 flex justify-center w-full px-12 font-semibold text-white">
-        <h1>{movies.name}</h1>
+      <div className="w-full max-w-5xl aspect-video">
+        {movies.key ? (
+          <iframe
+            className="w-full h-full rounded-lg shadow-lg"
+            src={`https://www.youtube.com/embed/${movies.key}`}
+            title={`${movies.name || "Movie"} trailer`}
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-900 rounded-lg">
+            <p className="text-white text-center text-lg px-4">
+              No video available for this movie
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="w-full text-center mt-6">
+        <h1 className="text-white text-xl sm:text-2xl md:text-3xl font-semibold">
+          {movies.name}
+        </h1>
       </div>
     </div>
   );
