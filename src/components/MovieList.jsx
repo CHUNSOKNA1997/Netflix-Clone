@@ -54,7 +54,7 @@ const MovieList = ({ Title, Category }) => {
   }, []);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 ml-[-40px] md:ml-0">
       <p className="text-4xl font-bold ml-14">{Title}</p>
       <div
         className="flex gap-8 px-14 overflow-x-scroll pb-8 hover:cursor-pointer"
