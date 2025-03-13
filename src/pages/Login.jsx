@@ -6,7 +6,7 @@ const Login = () => {
 
   return (
     <div className="relative h-screen w-full background-banner-login">
-      <div className="absolute top-10 left-32 z-10">
+      <div className="absolute left-4 top-10 sm:left-32 z-10">
         <img src={logo} alt="Netflix" className="w-40" />
       </div>
 

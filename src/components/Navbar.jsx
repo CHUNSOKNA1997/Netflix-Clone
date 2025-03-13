@@ -78,7 +78,10 @@ const Navbar = () => {
           </p>
         </div>
 
-        <button className="text-white md:hidden" onClick={toggleMobileMenu}>
+        <button
+          className="text-white md:hidden hover:cursor-pointer hover:text-red-500 transition-colors duration-300"
+          onClick={toggleMobileMenu}
+        >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
