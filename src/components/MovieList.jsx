@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Spinner from "./Spinner";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -16,7 +17,10 @@ const MovieList = ({ Title, Category }) => {
   const [movies, setMovies] = useState([]);
   const scrollRef = useRef();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchMovies = async () => {
+    setIsLoading(true);
     try {
       const endpoint = `${API_BASE_URL}/movie/${
         Category ? Category : "popular"
@@ -29,15 +33,24 @@ const MovieList = ({ Title, Category }) => {
       setMovies(data.results);
     } catch (error) {
       setErrorMessage(`Error fetching data: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  {
+    isLoading ? (
+      <div className="px-5 sm:px-10 lg:px-15">
+        <Spinner />
+      </div>
+    ) : errorMessage ? (
+      <div className="text-red-500 px-14">{errorMessage}</div>
+    ) : null;
+  }
 
   useEffect(() => {
     fetchMovies();
   }, [Category]);
-  if (errorMessage) {
-    return <div className="text-red-500 px-14">{errorMessage}</div>;
-  }
 
   const handleWheel = (e) => {
     if (scrollRef.current) {
